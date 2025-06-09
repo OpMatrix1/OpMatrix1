@@ -1,0 +1,19 @@
+.aboutpage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  background: #f5f6fa;
+}
+
+.aboutpage-container h1 {
+  color: #0984e3;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.aboutpage-container p {
+  color: #636e72;
+  font-size: 1.2rem;
+}

@@ -1,0 +1,19 @@
+.contactpage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  background: #f5f6fa;
+}
+
+.contactpage-container h1 {
+  color: #00b894;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.contactpage-container p {
+  color: #636e72;
+  font-size: 1.2rem;
+}
