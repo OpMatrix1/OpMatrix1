@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const db = require('./db');
 const bodyParser = require('body-parser');
+const usersRouter = require('./users');
 
 const app = express();
 app.use(cors());
@@ -49,6 +50,9 @@ app.post('/login', (req, res) => {
     }
   );
 });
+
+// Mount the new /users API routes in the backend server for admin user management
+app.use('/users', usersRouter);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

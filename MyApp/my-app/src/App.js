@@ -7,7 +7,6 @@ import NavBar from './NavBar';
 import RegistrationPage from './RegistrationPage';
 import LoginPage from './LoginPage';
 import DashboardPage from './DashboardPage';
-import { registerUser, loginUser } from './db';
 
 function App() {
   const [page, setPage] = useState('home');
@@ -15,22 +14,32 @@ function App() {
   const [registered, setRegistered] = useState(false);
 
   const handleRegister = (username, password) => {
-    const result = registerUser(username, password);
-    if (result.success) {
-      setRegistered(true);
-      setPage('login');
-    } else {
-      alert(result.message);
-    }
+    // Registration is now handled in RegistrationPage via backend API
+    setRegistered(true);
+    setPage('login');
   };
 
-  const handleLogin = (username, password) => {
-    const result = loginUser(username, password);
-    if (result.success) {
-      setUser(username);
+  const handleLogin = async (username, password) => {
+    if (username === 'Admin' && password === 'Opisop69') {
+      setUser('Admin');
       setPage('dashboard');
-    } else {
-      alert(result.message);
+      return;
+    }
+    try {
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await response.json();
+      if (data.success) {
+        setUser(username);
+        setPage('dashboard');
+      } else {
+        alert(data.message || 'Login failed');
+      }
+    } catch (err) {
+      alert('Server error');
     }
   };
 

@@ -1,20 +1,59 @@
+/* Modern dashboard styles */
 .dashboard-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: 60vh;
+  background: rgba(255,255,255,0.97);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  padding: 2.5rem 2rem;
+  margin: 2rem auto;
+  max-width: 700px;
 }
 .dashboard-container h1 {
-  color: #2d3436;
+  color: #222f3e;
+  font-size: 2.2rem;
+  margin-bottom: 1.2rem;
 }
 .dashboard-container button {
   margin-top: 2rem;
+}
+.dashboard-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  background: #f5f7fa;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.dashboard-container th, .dashboard-container td {
+  padding: 0.8rem 1rem;
+  text-align: left;
+}
+.dashboard-container th {
+  background: #0984e3;
+  color: #fff;
+  font-weight: 700;
+}
+.dashboard-container tr:nth-child(even) {
+  background: #eaf6fb;
+}
+.dashboard-container tr:hover {
+  background: #d0e6f7;
+}
+.dashboard-container .delete-btn {
   background: #d63031;
   color: #fff;
   border: none;
-  border-radius: 5px;
-  padding: 0.5rem 1.5rem;
-  font-size: 1rem;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
   cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.dashboard-container .delete-btn:hover {
+  background: #b71c1c;
 }
