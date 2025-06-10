@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import HomePage from './HomePage';
 import AboutPage from './AboutPage';
@@ -7,36 +7,47 @@ import NavBar from './NavBar';
 import RegistrationPage from './RegistrationPage';
 import LoginPage from './LoginPage';
 import DashboardPage from './DashboardPage';
+import PapersPage from './PapersPage';
+import { AuthProvider, useAuth } from './context/AuthContext';
 
-function App() {
+function AppContent() {
   const [page, setPage] = useState('home');
-  const [user, setUser] = useState(null);
   const [registered, setRegistered] = useState(false);
+  const { auth, login, logout } = useAuth();
+  const [user, setUser] = useState(auth?.user || null);
 
-  const handleRegister = (username, password) => {
-    // Registration is now handled in RegistrationPage via backend API
+  useEffect(() => {
+    if (!auth?.user && page === 'dashboard') {
+      setPage('home');
+    }
+    setUser(auth?.user || null);
+  }, [auth, page]);
+
+  const handleRegister = async (username, password, email) => {
     setRegistered(true);
-    setPage('login');
+    try {
+      // Use AuthService for registration
+      const response = await import('./services/api').then(m => m.AuthService.register(username, password, email));
+      if (response.success) {
+        setPage('login');
+      } else {
+        alert(response.message || 'Registration failed');
+      }
+    } catch (err) {
+      alert('Server error');
+    }
   };
 
   const handleLogin = async (username, password) => {
-    if (username === 'Admin' && password === 'Opisop69') {
-      setUser('Admin');
-      setPage('dashboard');
-      return;
-    }
     try {
-      const response = await fetch('/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-      });
-      const data = await response.json();
-      if (data.success) {
-        setUser(username);
+      // Always use backend API for login, including admin
+      const response = await import('./services/api').then(m => m.AuthService.login(username, password));
+      if (response.success) {
+        login(response); // sets auth context
+        setUser(response.user);
         setPage('dashboard');
       } else {
-        alert(data.message || 'Login failed');
+        alert(response.message || 'Login failed');
       }
     } catch (err) {
       alert('Server error');
@@ -44,6 +55,7 @@ function App() {
   };
 
   const handleLogout = () => {
+    logout();
     setUser(null);
     setPage('login');
   };
@@ -56,23 +68,31 @@ function App() {
     else if (page === 'contact') content = <ContactPage />;
     else content = <HomePage />;
   } else {
-    if (page === 'dashboard') content = <DashboardPage username={user} onLogout={handleLogout} />;
+    if (page === 'dashboard') content = <DashboardPage username={user.username} onLogout={handleLogout} />;
     else if (page === 'about') content = <AboutPage />;
     else if (page === 'contact') content = <ContactPage />;
-    else content = <DashboardPage username={user} onLogout={handleLogout} />;
+    else if (page === 'papers') content = <PapersPage user={user} />;
+    else content = <DashboardPage username={user.username} onLogout={handleLogout} />;
   }
 
   return (
     <div className="App">
-      <NavBar currentPage={page} onNavigate={setPage} />
-      { !user && (page !== 'register' && page !== 'login') && (
-        <div style={{ marginTop: 20 }}>
-          <button onClick={() => setPage('login')}>Login</button>
-          <button onClick={() => setPage('register')} style={{ marginLeft: 10 }}>Register</button>
-        </div>
-      )}
+      <NavBar 
+        onNavigate={setPage} 
+        currentPage={page}
+        user={user}
+        onLogout={handleLogout}
+      />
       {content}
     </div>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 

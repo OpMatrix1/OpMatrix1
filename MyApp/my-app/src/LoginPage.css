@@ -1,19 +1,19 @@
-/* Modern login page styles */
+/* Modern login page styles with transparent background and glassy inputs */
 .login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 60vh;
-  background: rgba(255,255,255,0.95);
+  background: transparent;
   border-radius: 18px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  box-shadow: none;
   padding: 2.5rem 2rem;
   margin: 2rem auto;
   max-width: 400px;
 }
 .login-container h2 {
-  color: #00b894;
+  color: #fff;
   font-size: 2rem;
   margin-bottom: 1.5rem;
 }
@@ -23,12 +23,25 @@
   gap: 1.2rem;
   width: 100%;
 }
-.login-container input, .login-container button {
-  padding: 0.7rem;
+.login-container input {
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  border: 1.5px solid rgba(161,140,209,0.25);
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(161,140,209,0.10);
+  backdrop-filter: blur(4px);
+  padding: 0.7rem 1rem;
   font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  transition: border 0.2s, background 0.2s;
+}
+.login-container input:focus {
+  border: 1.5px solid #fff;
+  background: rgba(161,140,209,0.25);
+  outline: none;
 }
 .login-container button {
-  background: linear-gradient(90deg, #00b894 0%, #0984e3 100%);
+  background: linear-gradient(90deg, #7500b8 0%, #0984e3 100%);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -36,8 +49,43 @@
   font-weight: 600;
   margin-top: 0.5rem;
   transition: background 0.2s, transform 0.2s;
+  padding: 12px;
+  width: 100%;
 }
-.login-container button:hover {
-  background: linear-gradient(90deg, #0984e3 0%, #00b894 100%);
+
+.login-container button:hover:not(:disabled) {
+  background: linear-gradient(90deg, #0984e3 0%, #5600b8 100%);
   transform: translateY(-2px) scale(1.03);
+}
+
+.login-container button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.error-message {
+  color: #ff4444;
+  background: rgba(255, 68, 68, 0.1);
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.login-footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: #fff;
+}
+
+.login-footer .link {
+  color: #0984e3;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 5px;
+}
+
+.login-footer .link:hover {
+  color: #7500b8;
 }

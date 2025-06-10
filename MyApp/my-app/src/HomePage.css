@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   min-height: 80vh;
-  background: #f5f6fa;
+  background: #f5f6fa00;
 }
 
 .homepage-container h1 {
@@ -14,6 +14,6 @@
 }
 
 .homepage-container p {
-  color: #636e72;
+  color: #ffffff;
   font-size: 1.2rem;
 }

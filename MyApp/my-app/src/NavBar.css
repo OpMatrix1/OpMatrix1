@@ -1,29 +1,77 @@
-/* Modern navigation bar styles */
+/* Transparent, glassy nav bar */
 .navbar {
   display: flex;
   justify-content: center;
-  gap: 1.2rem;
-  background: #fff;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  padding: 1.2rem 0;
+  gap: 1rem;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 16px rgba(161,140,209,0.12);
+  padding: 1rem 0;
   margin-bottom: 2rem;
   border-radius: 0 0 18px 18px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  animation: navbarFadeIn 1.2s cubic-bezier(0.77,0,0.175,1);
+}
+
+@keyframes navbarFadeIn {
+  from { opacity: 0; transform: translateY(-30px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .navbar button {
-  background: none;
-  border: 2px solid #0984e3;
-  color: #0984e3;
-  padding: 0.5rem 1.5rem;
-  font-size: 1.1rem;
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  border: 1.5px solid rgba(161,140,209,0.25);
+  box-shadow: 0 2px 8px rgba(161,140,209,0.10);
   border-radius: 8px;
-  cursor: pointer;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
   font-weight: 600;
-  transition: background 0.2s, color 0.2s, border 0.2s;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
+  backdrop-filter: blur(4px);
+  position: relative;
+  overflow: hidden;
+  animation: glassyBtnFadeIn 1s cubic-bezier(0.77,0,0.175,1);
+}
+
+@keyframes glassyBtnFadeIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.navbar button::after {
+  content: '';
+  position: absolute;
+  left: -75%;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.05) 100%);
+  transform: skewX(-20deg);
+  transition: left 0.5s cubic-bezier(0.77,0,0.175,1);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.navbar button:hover::after, .navbar button:focus::after {
+  left: 120%;
+  transition: left 0.7s cubic-bezier(0.77,0,0.175,1);
+}
+
+.navbar button:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 16px rgba(161,140,209,0.22);
+  transition: transform 0.15s cubic-bezier(0.77,0,0.175,1), box-shadow 0.15s;
 }
 
 .navbar button.active, .navbar button:hover {
-  background: #0984e3;
+  background: rgba(161,140,209,0.25);
   color: #fff;
-  border: 2px solid #00b894;
+  border: 1.5px solid #fff;
+  box-shadow: 0 4px 16px rgba(161,140,209,0.18);
+  filter: brightness(1.15) saturate(1.2);
+  transition: filter 0.3s cubic-bezier(0.77,0,0.175,1), background 0.3s, border 0.3s, box-shadow 0.3s;
 }

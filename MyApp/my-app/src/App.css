@@ -2,31 +2,92 @@
 body {
   margin: 0;
   font-family: 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  background: linear-gradient(120deg, #f5f7fa 0%, #c3cfe2 100%);
   min-height: 100vh;
+  background: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=compress&w=1200&q=80') center/cover no-repeat fixed;
+  /* fallback for winter sky */
+  background-color: #a18cd1;
+  transition: background 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(44, 62, 80, 0.45), 0 1px 2px #000;
+}
+
+body::before {
+  content: none;
 }
 
 .App {
   text-align: center;
   min-height: 100vh;
   background: transparent;
+  position: relative;
+  z-index: 1;
+  animation: fadeInApp 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.App, .registration-container, .login-container, .dashboard-container, .aboutpage-container, .contactpage-container, .homepage-container {
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(44, 62, 80, 0.45), 0 1px 2px #000;
+  transition: color 0.5s, text-shadow 0.5s;
+}
+
+@keyframes fadeInApp {
+  from { opacity: 0; transform: translateY(40px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 button {
-  background: linear-gradient(90deg, #0984e3 0%, #00b894 100%);
+  background: rgba(255,255,255,0.18);
   color: #fff;
-  border: none;
+  border: 1.5px solid rgba(161,140,209,0.25);
   border-radius: 8px;
   padding: 0.7rem 2rem;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 2px 12px rgba(161,140,209,0.10);
+  transition: background 0.3s cubic-bezier(0.77,0,0.175,1), color 0.3s, border 0.3s, box-shadow 0.3s, transform 0.2s cubic-bezier(0.77,0,0.175,1);
+  animation: fadeInBtn 0.8s cubic-bezier(0.77,0,0.175,1);
+  position: relative;
+  overflow: hidden;
+  animation: glassyBtnFadeIn 1s cubic-bezier(0.77,0,0.175,1);
 }
-button:hover {
-  background: linear-gradient(90deg, #00b894 0%, #0984e3 100%);
-  transform: translateY(-2px) scale(1.03);
+@keyframes fadeInBtn {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes glassyBtnFadeIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+button::after {
+  content: '';
+  position: absolute;
+  left: -75%;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.05) 100%);
+  transform: skewX(-20deg);
+  transition: left 0.5s cubic-bezier(0.77,0,0.175,1);
+  z-index: 1;
+  pointer-events: none;
+}
+button:hover::after, button:focus::after {
+  left: 120%;
+  transition: left 0.7s cubic-bezier(0.77,0,0.175,1);
+}
+button:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 16px rgba(161,140,209,0.22);
+  transition: transform 0.15s cubic-bezier(0.77,0,0.175,1), box-shadow 0.15s;
+}
+button:hover, button:focus {
+  background: rgba(161,140,209,0.25);
+  color: #fff;
+  border: 1.5px solid #fff;
+  box-shadow: 0 4px 16px rgba(161,140,209,0.18);
+  filter: brightness(1.15) saturate(1.2);
+  transition: filter 0.3s cubic-bezier(0.77,0,0.175,1), background 0.3s, border 0.3s, box-shadow 0.3s;
 }
 
 input {
@@ -35,46 +96,61 @@ input {
   padding: 0.7rem 1rem;
   font-size: 1rem;
   margin-bottom: 0.5rem;
-  background: #fff;
-  transition: border 0.2s;
+  background: rgba(255,255,255,0.85);
+  color: #222f3e;
+  box-shadow: 0 2px 8px rgba(161,140,209,0.10);
+  transition: border 0.2s, box-shadow 0.3s cubic-bezier(0.77,0,0.175,1), background 0.5s cubic-bezier(0.77,0,0.175,1);
+  animation: fadeInInput 1s cubic-bezier(0.77,0,0.175,1);
+}
+@keyframes fadeInInput {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 input:focus {
   border: 1.5px solid #0984e3;
   outline: none;
-}
-
-h1, h2, h3 {
-  font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
-  font-weight: 800;
+  background: #fff;
   color: #222f3e;
 }
 
-/* Add a hero section for the homepage */
+h1, h2, h3, label {
+  color: #fff !important;
+  text-shadow: 0 2px 12px #6c3483, 0 1px 2px #000;
+  transition: color 0.5s, text-shadow 0.5s;
+}
+
+/* Add a hero section for the homepage with a winter AI image */
 .hero {
-  background: linear-gradient(120deg, #74ebd5 0%, #ACB6E5 100%);
-  padding: 4rem 2rem 2rem 2rem;
-  border-radius: 0 0 40px 40px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  background: transparent;
+  box-shadow: none;
+  padding: 3rem 2rem 2rem 2rem;
+  border-radius: 0;
   margin-bottom: 2rem;
   position: relative;
+  z-index: 2;
+  animation: fadeInHero 1.2s cubic-bezier(0.77,0,0.175,1);
+  transition: background 1s cubic-bezier(0.77,0,0.175,1), box-shadow 0.5s;
 }
+/* Remove the profile image from the hero section */
 .hero img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-  margin-bottom: 1rem;
+  display: none;
+}
+@keyframes fadeInHero {
+  from { opacity: 0; transform: scale(0.97) translateY(-30px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 .hero-title {
   font-size: 2.7rem;
   margin-bottom: 0.5rem;
-  color: #222f3e;
+  color: #fff;
+  font-weight: 800;
+  text-shadow: 0 2px 16px #6c3483, 0 1px 2px #000;
 }
 .hero-desc {
   font-size: 1.3rem;
-  color: #636e72;
+  color: #fbc2eb;
   margin-bottom: 1.5rem;
+  text-shadow: 0 1px 8px #6c3483;
 }
 
 /* App specific styles */
@@ -111,6 +187,16 @@ h1, h2, h3 {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Add fade transition for page content */
+.App > * {
+  animation: fadeInPage 0.8s cubic-bezier(0.77,0,0.175,1);
+  transition: color 0.5s, text-shadow 0.5s;
+}
+@keyframes fadeInPage {
+  from { opacity: 0; transform: translateY(30px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* Responsive */
